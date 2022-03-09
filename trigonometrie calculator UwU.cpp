@@ -149,7 +149,7 @@ void ctn() {
     double ctn;
     while (!done)
     {
-        cout << "no buuuuun, zi care e tangenta (numar te rog): ";
+        cout << "no buuuuun, zi care e cotangenta (numar te rog): ";
         getline(cin, num);
         try
         {
