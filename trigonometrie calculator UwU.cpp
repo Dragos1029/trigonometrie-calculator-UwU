@@ -2,8 +2,11 @@
 #include <windows.h>
 #include <string>
 #include <conio.h>
+#include <cmath>
 
 using namespace std;
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 int stringToInt(std::string nrString) {
     if (nrString.find("1") != std::string::npos) {
@@ -22,17 +25,38 @@ int stringToInt(std::string nrString) {
 }
 
 void sin() {
-    cout << "no buuuuun, zi care e sinusul: ";
-    int sin;
-    try
+    bool done = false;
+    string num;
+    double sin;
+    while (!done)
     {
-        cin >> sin;
-        cout << "wow";
+        cout << "no buuuuun, zi care e sinusul (numar te rog): ";
+        getline(cin, num);
+        try
+        {
+            sin = stod(num);
+            //cout << num << "\n";
+            done = true;
+        }
+        catch (std::exception& e)
+        {
+            SetConsoleTextAttribute(hConsole, 75);
+            cout << e.what() << "\n";
+            cout << "\
+BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << "no hai te mai las sa incerci odata\n";
+        }
     }
-    catch (std::exception& e)
-    {
-        cout << e.what();
-    }
+    double cos = sqrt(1 - pow(sin, 2));
+    double tan = sin / cos;
+    double ctn = cos / sin;
+    cout << "\
+no buuun, am calculat asa:\n\
+avem sin: " << sin << "\n\
+avem cos: " << cos << "\n\
+avem tan: " << tan << "\n\
+avem ctg: " << ctn << "\n";
 }
 
 int main()
