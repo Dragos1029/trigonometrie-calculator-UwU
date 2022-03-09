@@ -36,7 +36,14 @@ void sin() {
         {
             sin = stod(num);
             //cout << num << "\n";
-            done = true;
+            if (sin > 1 || sin < -1) {
+                cout << "\
+ba tu ori esti prost, ori ma trolezi\n\
+dar pt ca sunt om credincios, te mai las sa incerci odata\n";
+            }
+            else {
+                done = true;
+            }
         }
         catch (std::exception& e)
         {
@@ -51,6 +58,119 @@ BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
     double cos = sqrt(1 - pow(sin, 2));
     double tan = sin / cos;
     double ctn = cos / sin;
+    cout << "\
+no buuun, am calculat asa:\n\
+avem sin: " << sin << "\n\
+avem cos: " << cos << "\n\
+avem tan: " << tan << "\n\
+avem ctg: " << ctn << "\n";
+}
+
+void cos() {
+    bool done = false;
+    string num;
+    double cos;
+    while (!done)
+    {
+        cout << "no buuuuun, zi care e cosinusul (numar te rog): ";
+        getline(cin, num);
+        try
+        {
+            cos = stod(num);
+            //cout << num << "\n";
+            if (cos > 1 || cos < -1) {
+                cout << "\
+ba tu ori esti prost, ori ma trolezi\n\
+dar pt ca sunt om credincios, te mai las sa incerci odata\n";
+            }
+            else {
+                done = true;
+            }
+        }
+        catch (std::exception& e)
+        {
+            SetConsoleTextAttribute(hConsole, 75);
+            cout << e.what() << "\n";
+            cout << "\
+BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << "no hai te mai las sa incerci odata\n";
+        }
+    }
+    double sin = sqrt(1 - pow(cos, 2));
+    double tan = sin / cos;
+    double ctn = cos / sin;
+    cout << "\
+no buuun, am calculat asa:\n\
+avem sin: " << sin << "\n\
+avem cos: " << cos << "\n\
+avem tan: " << tan << "\n\
+avem ctg: " << ctn << "\n";
+}
+
+void tan() {
+    bool done = false;
+    string num;
+    double tan;
+    while (!done)
+    {
+        cout << "no buuuuun, zi care e tangenta (numar te rog): ";
+        getline(cin, num);
+        try
+        {
+            tan = stod(num);
+            //cout << num << "\n";
+            done = true;
+        }
+        catch (std::exception& e)
+        {
+            SetConsoleTextAttribute(hConsole, 75);
+            cout << e.what() << "\n";
+            cout << "\
+BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << "no hai te mai las sa incerci odata\n";
+        }
+    }
+    double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
+    double cos = sqrt(1 / (1 + pow(tan, 2)));
+    double ctn = cos / sin;
+    cout << "\
+no buuun, am calculat asa:\n\
+avem sin: " << sin << "\n\
+avem cos: " << cos << "\n\
+avem tan: " << tan << "\n\
+avem ctg: " << ctn << "\n";
+}
+
+void ctn() {
+    bool done = false;
+    string num;
+    double ctn;
+    while (!done)
+    {
+        cout << "no buuuuun, zi care e tangenta (numar te rog): ";
+        getline(cin, num);
+        try
+        {
+            ctn = stod(num);
+            //cout << num << "\n";
+            done = true;
+        }
+        catch (std::exception& e)
+        {
+            SetConsoleTextAttribute(hConsole, 75);
+            cout << e.what() << "\n";
+            cout << "\
+BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << "no hai te mai las sa incerci odata\n";
+        }
+    }
+    double tan = 1 / ctn;
+    double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
+    double cos = sqrt(1 / (1 + pow(tan, 2)));
+    
     cout << "\
 no buuun, am calculat asa:\n\
 avem sin: " << sin << "\n\
@@ -81,41 +201,68 @@ zi bro cu ce lucram\n\
         raspuns = " " + raspuns + " ";
         if (raspuns.find(" nu ") != std::string::npos) {
             cout << "bine boss hai la tema\n";
-            bool done = false;
-            while (!done)
-            {
-                cout << sinSauCos;
-                cout << "scrie numarul corespunzator: ";
-                getline(cin, raspuns);
-                raspunsInt = stringToInt(raspuns);
-                switch (raspunsInt)
+            bool gata = false;
+            while (!gata) {
+                bool done = false;
+                while (!done)
                 {
-                case 1:
-                    //cout << "1\n";
-                    sin();
-                    done = true;
-                    break;
-                case 2:
-                    cout << "2\n";
-                    done = true;
-                    break;
-                case 3:
-                    cout << "3\n";
-                    done = true;
-                    break;
-                case 4:
-                    cout << "4\n";
-                    done = true;
-                    break;
-                default:
-                    cout << "ba nebunule, un numar de la 1 la 4 te rog\n";
-                    break;
+                    cout << sinSauCos;
+                    cout << "scrie numarul corespunzator: ";
+                    getline(cin, raspuns);
+                    raspunsInt = stringToInt(raspuns);
+                    switch (raspunsInt)
+                    {
+                    case 1:
+                        //cout << "1\n";
+                        sin();
+                        done = true;
+                        break;
+                    case 2:
+                        //cout << "2\n";
+                        cos();
+                        done = true;
+                        break;
+                    case 3:
+                        //cout << "3\n";
+                        tan();
+                        done = true;
+                        break;
+                    case 4:
+                        //cout << "4\n";
+                        ctn();
+                        done = true;
+                        break;
+                    default:
+                        cout << "ba nebunule, un numar de la 1 la 4 te rog\n";
+                        break;
+                    }
+
+                }
+                bool saRaspuns = false;
+                while (!saRaspuns)
+                {
+                    cout << "mai facem un calcul boss?: ";
+                    getline(cin, raspuns);
+                    raspuns = " " + raspuns + " ";
+                    if (raspuns.find(" nu ") != std::string::npos) {
+                        gata = true;
+                        saRaspuns = true;
+                    }
+                    else if (raspuns.find(" da ") != std::string::npos) {
+                        cout << "ok boss, hai sa mai facem\n";
+                        saRaspuns = true;
+                    }
+                    else {
+                        cout << "scrie mai clar, da sau nu?\n";
+                    }
                 }
             }
+            stay = false;
         }
         else if (raspuns.find(" da ") != std::string::npos) {
-            cout << "pleaca ba muresan de aici";
-            stay = false;
+            cout << "pleaca ba muresan de aici\n";
+            _getch();
+            return 0;
         }
         else {
             cout << "nu prea te-am inteles boss, mai zi odata cu da sau nu\n";
@@ -123,5 +270,8 @@ zi bro cu ce lucram\n\
 
 
     }
+
+    cout << "sal\n";
     
+    _getch();
 }
