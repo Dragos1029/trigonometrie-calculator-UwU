@@ -1,12 +1,84 @@
 #include <iostream>
-#include <windows.h>
+#include <windows.h>    //color
 #include <string>
-#include <conio.h>
+#include <conio.h>      //_getch()
 #include <cmath>
+#include <stdio.h>      //printf
+
+#define PI 3.14159265
 
 using namespace std;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+string welcome = "Bun venit la propriul tau calculator de trigonometrie!\n";
+
+string firstPick = "\
+Alege una dintre cele doua optiuni de mai jos:\n\
+1.Calculeaza folosind un unghi\n\
+2.Calculeaza folosind o functie trigonometrica deja stiuta\n\
+Alege numarul unei optiuni (se accepta si propozitii): ";
+
+string functionPick = "\
+Alege una dintre optiunile de mai jos:\n\
+1.Calculeaza folosind sinusul\n\
+2.Calculeaza folosind cosinusul\n\
+3.Calculeaza folosind tangenta\n\
+4.Calculeaza folosind cotangenta\n\
+Alege numarul unei optiuni: ";
+
+string tryAgain = "\
+Nu am inteles ce optiune doresti, te rog sa mai incerci odata\n\
+Alege numarul unei optiuni (se accepta si propozitii): ";
+
+string repeat = "Doresti sa mai calculezi ceva? da sau nu: ";
+
+string tryAgainNr = "Nu am gasit nici un numar, mai incearca odata: ";
+
+string degreesOrRadians = "\
+Care este unitatea de masura pentru unghi?\n\
+1.Grade\n\
+2.Radiani\n\
+Alege numarul unei optiuni: ";
+
+string askForAngle = "Scrie te rog unghiul dorit: ";
+
+string askForSin = "Scrie te rog sinusul dorit: ";
+string askForCosin = "Scrie te rog cosinusul dorit: ";
+string askForTan = "Scrie te rog tangenta dorita: ";
+string askForCotan = "Scrie te rog tangenta dorita: ";
+
+string angleAnswer = "Pentru un unghi de %s avem:\n\
+Sinus de: %f\n\
+Cosinus de: %f\n\
+Tangenta de: %f\n\
+Cotangenta de: %f\n";
+
+string sinAnswer = "Pentru sinus de %f avem:\n\
+Cosinus de: %f\n\
+Tangenta de: %f\n\
+Cotangenta de: %f\n";
+
+string cosinAnswer = "Pentru cosinus de %f avem:\n\
+Sinus de: %f\n\
+Tangenta de: %f\n\
+Cotangenta de: %f\n";
+
+string tanAnswer = "Pentru tangenta de %f avem:\n\
+Sinus de: %f\n\
+Cosinus de: %f\n\
+Cotangenta de: %f\n";
+
+string cotanAnswer = "Pentru cotangenta de %f avem:\n\
+Sinus de: %f\n\
+Cosinus de: %f\n\
+Tangenta de: %f\n";
+
+string goodbye = "O zi buna!\n";
+
+string raspuns;
+
+int state = 1;
 
 int stringToInt(std::string nrString) {
     if (nrString.find("1") != std::string::npos) {
@@ -24,254 +96,217 @@ int stringToInt(std::string nrString) {
     else return 0;
 }
 
-void sin() {
-    bool done = false;
-    string num;
-    double sin;
-    while (!done)
+int yesOrNo(std::string yesString) {
+    yesString = " " + yesString + " ";
+    if (yesString.find(" da ") != std::string::npos) {
+        return 1;
+    }
+    else if (yesString.find(" nu ") != std::string::npos) {
+        return 2;
+    }
+    else return 0;
+}
+
+double getNr() {
+    double angle = 0;
+
+    while (state == 3)
     {
-        cout << "no buuuuun, zi care e sinusul (numar te rog): ";
-        getline(cin, num);
+        getline(cin, raspuns);
+
         try
         {
-            sin = stod(num);
-            //cout << num << "\n";
-            if (sin > 1 || sin < -1) {
-                cout << "\
-ba tu ori esti prost, ori ma trolezi\n\
-dar pt ca sunt om credincios, te mai las sa incerci odata\n";
-            }
-            else {
-                done = true;
-            }
+            state = 4;
+            angle = stod(raspuns);
         }
-        catch (std::exception& e)
+        catch (const std::exception&)
         {
-            SetConsoleTextAttribute(hConsole, 75);
-            cout << e.what() << "\n";
-            cout << "\
-BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
-            SetConsoleTextAttribute(hConsole, 11);
-            cout << "no hai te mai las sa incerci odata\n";
+            cout << tryAgainNr;
+            state = 3;
         }
     }
+
+    return angle;
+}
+
+void sine() {
+    cout << askForSin;
+
+    double sin = getNr();
+
     double cos = sqrt(1 - pow(sin, 2));
     double tan = sin / cos;
     double ctn = cos / sin;
-    cout << "\
-no buuun, am calculat asa:\n\
-avem sin: " << sin << "\n\
-avem cos: " << cos << "\n\
-avem tan: " << tan << "\n\
-avem ctg: " << ctn << "\n";
+
+    printf(sinAnswer.c_str(), sin, cos, tan, ctn);
 }
 
-void cos() {
-    bool done = false;
-    string num;
-    double cos;
-    while (!done)
-    {
-        cout << "no buuuuun, zi care e cosinusul (numar te rog): ";
-        getline(cin, num);
-        try
-        {
-            cos = stod(num);
-            //cout << num << "\n";
-            if (cos > 1 || cos < -1) {
-                cout << "\
-ba tu ori esti prost, ori ma trolezi\n\
-dar pt ca sunt om credincios, te mai las sa incerci odata\n";
-            }
-            else {
-                done = true;
-            }
-        }
-        catch (std::exception& e)
-        {
-            SetConsoleTextAttribute(hConsole, 75);
-            cout << e.what() << "\n";
-            cout << "\
-BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
-            SetConsoleTextAttribute(hConsole, 11);
-            cout << "no hai te mai las sa incerci odata\n";
-        }
-    }
+void cosine() {
+    cout << askForCosin;
+
+    double cos = getNr();
+
     double sin = sqrt(1 - pow(cos, 2));
     double tan = sin / cos;
     double ctn = cos / sin;
-    cout << "\
-no buuun, am calculat asa:\n\
-avem sin: " << sin << "\n\
-avem cos: " << cos << "\n\
-avem tan: " << tan << "\n\
-avem ctg: " << ctn << "\n";
+    
+    printf(cosinAnswer.c_str(), cos, sin, tan, ctn);
 }
 
-void tan() {
-    bool done = false;
-    string num;
-    double tan;
-    while (!done)
-    {
-        cout << "no buuuuun, zi care e tangenta (numar te rog): ";
-        getline(cin, num);
-        try
-        {
-            tan = stod(num);
-            //cout << num << "\n";
-            done = true;
-        }
-        catch (std::exception& e)
-        {
-            SetConsoleTextAttribute(hConsole, 75);
-            cout << e.what() << "\n";
-            cout << "\
-BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
-            SetConsoleTextAttribute(hConsole, 11);
-            cout << "no hai te mai las sa incerci odata\n";
-        }
-    }
+void tangent() {
+    cout << askForTan;
+
+    double tan = getNr();
+
     double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
     double cos = sqrt(1 / (1 + pow(tan, 2)));
     double ctn = cos / sin;
-    cout << "\
-no buuun, am calculat asa:\n\
-avem sin: " << sin << "\n\
-avem cos: " << cos << "\n\
-avem tan: " << tan << "\n\
-avem ctg: " << ctn << "\n";
+
+    printf(tanAnswer.c_str(), tan, sin, cos, ctn);
 }
 
-void ctn() {
-    bool done = false;
-    string num;
-    double ctn;
-    while (!done)
-    {
-        cout << "no buuuuun, zi care e cotangenta (numar te rog): ";
-        getline(cin, num);
-        try
-        {
-            ctn = stod(num);
-            //cout << num << "\n";
-            done = true;
-        }
-        catch (std::exception& e)
-        {
-            SetConsoleTextAttribute(hConsole, 75);
-            cout << e.what() << "\n";
-            cout << "\
-BOSSSS AM ZIS UN NUMAR, TU VREI SA STRICI PROGRAMUL???\n";
-            SetConsoleTextAttribute(hConsole, 11);
-            cout << "no hai te mai las sa incerci odata\n";
-        }
-    }
+void cotangent() {
+    cout << askForCotan;
+
+    double ctn = getNr();
+    
     double tan = 1 / ctn;
     double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
     double cos = sqrt(1 / (1 + pow(tan, 2)));
     
-    cout << "\
-no buuun, am calculat asa:\n\
-avem sin: " << sin << "\n\
-avem cos: " << cos << "\n\
-avem tan: " << tan << "\n\
-avem ctg: " << ctn << "\n";
+    printf(cotanAnswer.c_str(), ctn, sin, cos, tan);
+}
+
+void unghi() 
+{
+    cout << degreesOrRadians;
+
+    bool usingDegrees = false;
+
+    while (state == 2)
+    {
+        getline(cin, raspuns);
+
+        switch (stringToInt(raspuns))
+        {
+            case 1:
+                usingDegrees = true;
+                state = 3;
+                break;
+            case 2:
+                usingDegrees = false;
+                state = 3;
+                break;
+            default:
+                cout << tryAgain;
+                break;
+        }
+    }
+
+    cout << askForAngle;
+
+    double angle = getNr();
+
+    string angleStr;
+
+    if (usingDegrees) {
+        angleStr = std::to_string(angle) + " grade";
+        angle = angle * PI / 180;
+    }
+    else angleStr = std::to_string(angle) + " radiani";
+
+    double sine = sin(angle);
+    double cosine = cos(angle);
+    double tangent = tan(angle);
+    double cotangent = 1 / tangent;
+
+    printf(angleAnswer.c_str(), angleStr.c_str(), sine, cosine, tangent, cotangent);
+}
+
+void functie() {
+    cout << functionPick;
+
+    while (state == 2)
+    {
+        getline(cin, raspuns);
+
+        switch (stringToInt(raspuns))
+        {
+        case 1:
+            state = 3;
+            sine();
+            break;
+        case 2:
+            state = 3;
+            cosine();
+            break;
+        case 3:
+            state = 3;
+            tangent();
+            break;
+        case 4:
+            state = 3;
+            cotangent();
+            break;
+        default:
+            cout << tryAgain;
+            break;
+        }
+    }
 }
 
 int main()
 {
     system("Color 0B");
-    std::string salut = "no buna ziua\n";
-    std::string intrebare = "ai chef sa faci tema la mate?: ";
-    std::string raspuns;
-    int raspunsInt;
-    std::string sinSauCos = "\
-zi bro cu ce lucram\n\
-1.sin\n\
-2.cos\n\
-3.tg\n\
-4.ctg\n";
-    cout << salut;
-    bool stay = true;
-    while (stay)
+
+    cout << welcome;
+
+    cout << firstPick;
+
+    while (state == 1)
     {
-        cout << intrebare;
-        getline(cin, raspuns);
-        raspuns = " " + raspuns + " ";
-        if (raspuns.find(" nu ") != std::string::npos) {
-            cout << "bine boss hai la tema\n";
-            bool gata = false;
-            while (!gata) {
-                bool done = false;
-                while (!done)
-                {
-                    cout << sinSauCos;
-                    cout << "scrie numarul corespunzator: ";
-                    getline(cin, raspuns);
-                    raspunsInt = stringToInt(raspuns);
-                    switch (raspunsInt)
-                    {
-                    case 1:
-                        //cout << "1\n";
-                        sin();
-                        done = true;
-                        break;
-                    case 2:
-                        //cout << "2\n";
-                        cos();
-                        done = true;
-                        break;
-                    case 3:
-                        //cout << "3\n";
-                        tan();
-                        done = true;
-                        break;
-                    case 4:
-                        //cout << "4\n";
-                        ctn();
-                        done = true;
-                        break;
-                    default:
-                        cout << "ba nebunule, un numar de la 1 la 4 te rog\n";
-                        break;
-                    }
+        while (state == 1)
+        {
+            getline(cin, raspuns);
 
-                }
-                bool saRaspuns = false;
-                while (!saRaspuns)
-                {
-                    cout << "mai facem un calcul boss?: ";
-                    getline(cin, raspuns);
-                    raspuns = " " + raspuns + " ";
-                    if (raspuns.find(" nu ") != std::string::npos) {
-                        gata = true;
-                        saRaspuns = true;
-                    }
-                    else if (raspuns.find(" da ") != std::string::npos) {
-                        cout << "ok boss, hai sa mai facem\n";
-                        saRaspuns = true;
-                    }
-                    else {
-                        cout << "scrie mai clar, da sau nu?\n";
-                    }
-                }
+            switch (stringToInt(raspuns))
+            {
+            case 1:
+                state = 2;
+                unghi();
+                break;
+            case 2:
+                state = 2;
+                functie();
+                break;
+            default:
+                cout << tryAgain;
+                break;
             }
-            stay = false;
-        }
-        else if (raspuns.find(" da ") != std::string::npos) {
-            cout << "pleaca ba muresan de aici\n";
-            _getch();
-            return 0;
-        }
-        else {
-            cout << "nu prea te-am inteles boss, mai zi odata cu da sau nu\n";
         }
 
+        cout << repeat;
 
+        while (state == 4) 
+        {
+            getline(cin, raspuns);
+
+            switch (yesOrNo(raspuns))
+            {
+                case 1:
+                    cout << firstPick;
+                    state = 1;
+                    break;
+                case 2:
+                    cout << goodbye;
+                    state = 0;
+                    break;
+                default:
+                    cout << tryAgain;
+                    break;
+            }
+        }
     }
-
-    cout << "sal\n";
     
     _getch();
 }
