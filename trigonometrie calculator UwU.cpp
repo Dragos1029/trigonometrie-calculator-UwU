@@ -55,21 +55,25 @@ Tangenta de: %f\n\
 Cotangenta de: %f\n";
 
 string sinAnswer = "Pentru sinus de %f avem:\n\
+Unghi de %f radiani sau %f grade\n\
 Cosinus de: %f\n\
 Tangenta de: %f\n\
 Cotangenta de: %f\n";
 
 string cosinAnswer = "Pentru cosinus de %f avem:\n\
+Unghi de %f radiani sau %f grade\n\
 Sinus de: %f\n\
 Tangenta de: %f\n\
 Cotangenta de: %f\n";
 
 string tanAnswer = "Pentru tangenta de %f avem:\n\
+Unghi de %f radiani sau %f grade\n\
 Sinus de: %f\n\
 Cosinus de: %f\n\
 Cotangenta de: %f\n";
 
 string cotanAnswer = "Pentru cotangenta de %f avem:\n\
+Unghi de %f radiani sau %f grade\n\
 Sinus de: %f\n\
 Cosinus de: %f\n\
 Tangenta de: %f\n";
@@ -129,7 +133,7 @@ double getNr() {
     return angle;
 }
 
-void sine() {
+void sinus() {
     cout << askForSin;
 
     double sin = getNr();
@@ -138,10 +142,13 @@ void sine() {
     double tan = sin / cos;
     double ctn = cos / sin;
 
-    printf(sinAnswer.c_str(), sin, cos, tan, ctn);
+    double angleRad = asin(sin);
+    double angleDegrees = angleRad * 180 / PI;
+
+    printf(sinAnswer.c_str(), sin, angleRad, angleDegrees, cos, tan, ctn);
 }
 
-void cosine() {
+void cosinus() {
     cout << askForCosin;
 
     double cos = getNr();
@@ -149,11 +156,14 @@ void cosine() {
     double sin = sqrt(1 - pow(cos, 2));
     double tan = sin / cos;
     double ctn = cos / sin;
+
+    double angleRad = asin(sin);
+    double angleDegrees = angleRad * 180 / PI;
     
-    printf(cosinAnswer.c_str(), cos, sin, tan, ctn);
+    printf(cosinAnswer.c_str(), cos, angleRad, angleDegrees, sin, tan, ctn);
 }
 
-void tangent() {
+void tangenta() {
     cout << askForTan;
 
     double tan = getNr();
@@ -162,10 +172,13 @@ void tangent() {
     double cos = sqrt(1 / (1 + pow(tan, 2)));
     double ctn = cos / sin;
 
-    printf(tanAnswer.c_str(), tan, sin, cos, ctn);
+    double angleRad = asin(sin);
+    double angleDegrees = angleRad * 180 / PI;
+
+    printf(tanAnswer.c_str(), tan, angleRad, angleDegrees, sin, cos, ctn);
 }
 
-void cotangent() {
+void cotangenta() {
     cout << askForCotan;
 
     double ctn = getNr();
@@ -173,8 +186,11 @@ void cotangent() {
     double tan = 1 / ctn;
     double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
     double cos = sqrt(1 / (1 + pow(tan, 2)));
+
+    double angleRad = asin(sin);
+    double angleDegrees = angleRad * 180 / PI;
     
-    printf(cotanAnswer.c_str(), ctn, sin, cos, tan);
+    printf(cotanAnswer.c_str(), ctn, angleRad, angleDegrees, sin, cos, tan);
 }
 
 void unghi() 
@@ -234,19 +250,19 @@ void functie() {
         {
         case 1:
             state = 3;
-            sine();
+            sinus();
             break;
         case 2:
             state = 3;
-            cosine();
+            cosinus();
             break;
         case 3:
             state = 3;
-            tangent();
+            tangenta();
             break;
         case 4:
             state = 3;
-            cotangent();
+            cotangenta();
             break;
         default:
             cout << tryAgain;
