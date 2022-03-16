@@ -35,6 +35,10 @@ string repeat = "Doresti sa mai calculezi ceva? da sau nu: ";
 
 string tryAgainNr = "Nu am gasit nici un numar, mai incearca odata: ";
 
+string tryAgainSinOrCos = "\
+Functia nu poate fii mai mare decat 1 sau mai mica de cat -1\n\
+Te rog mai incearca odata: ";
+
 string degreesOrRadians = "\
 Care este unitatea de masura pentru unghi?\n\
 1.Grade\n\
@@ -111,7 +115,7 @@ int yesOrNo(std::string yesString) {
     else return 0;
 }
 
-double getNr() {
+double getNr(bool sinOrCos) {
     double angle = 0;
 
     while (state == 3)
@@ -122,6 +126,11 @@ double getNr() {
         {
             state = 4;
             angle = stod(raspuns);
+
+            if (sinOrCos && (angle > 1 || angle < -1)) {
+                cout << tryAgainSinOrCos;
+                state = 3;
+            }
         }
         catch (const std::exception&)
         {
@@ -136,7 +145,7 @@ double getNr() {
 void sinus() {
     cout << askForSin;
 
-    double sin = getNr();
+    double sin = getNr(true);
 
     double cos = sqrt(1 - pow(sin, 2));
     double tan = sin / cos;
@@ -151,7 +160,7 @@ void sinus() {
 void cosinus() {
     cout << askForCosin;
 
-    double cos = getNr();
+    double cos = getNr(true);
 
     double sin = sqrt(1 - pow(cos, 2));
     double tan = sin / cos;
@@ -166,7 +175,7 @@ void cosinus() {
 void tangenta() {
     cout << askForTan;
 
-    double tan = getNr();
+    double tan = getNr(false);
 
     double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
     double cos = sqrt(1 / (1 + pow(tan, 2)));
@@ -181,7 +190,7 @@ void tangenta() {
 void cotangenta() {
     cout << askForCotan;
 
-    double ctn = getNr();
+    double ctn = getNr(false);
     
     double tan = 1 / ctn;
     double sin = sqrt(pow(tan, 2) / (1 + pow(tan, 2)));
@@ -221,7 +230,7 @@ void unghi()
 
     cout << askForAngle;
 
-    double angle = getNr();
+    double angle = getNr(false);
 
     string angleStr;
 
